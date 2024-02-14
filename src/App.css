@@ -158,10 +158,9 @@ article {
 @media (max-width: 800px) { 
   .heart-btn {
     position: relative;
-    display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15rem;
+    margin-top: 16rem;
     left: 0; 
   }
 }
