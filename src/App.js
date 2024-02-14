@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-
+import over from './images/over.jpg';
+import pikachu from './images/pikachu.jpg';
 function App() {
   const [envelopeState, setEnvelopeState] = useState({
     isInnerOpen: false,
@@ -9,29 +10,56 @@ function App() {
     isCloseBtnVisible: false,
     isMessage1Hidden: false,
     isMessage2Visible: false,
-    isYesButton: false,
-    isNoButton: false
+    isYesButtonVisible: false,
+    isNoButtonVisible: false,
+    isImageVisible: false
   });
-
-  const toggleEnvelope = () => {
-    setEnvelopeState((prevState) => ({
-      isInnerOpen: !prevState.isInnerOpen,
-      isOuterOpen: !prevState.isOuterOpen,
-      isHeartBtnHidden: !prevState.isHeartBtnHidden,
-      isCloseBtnVisible: !prevState.isCloseBtnVisible,
-      isMessage1Hidden: !prevState.isMessage1Hidden,
-      isMessage2Visible: !prevState.isMessage2Visible,
-      isYesButtonVisible: !prevState.isYesButtonVisible,
-      isNoButtonVisible: !prevState.isNoButtonVisible
-    }));
+  const openEnvelope = () => {
+      setEnvelopeState((prevState) => ({
+        ...prevState, 
+        isInnerOpen: true,
+        isOuterOpen: true,
+        isHeartBtnHidden: true,
+        isCloseBtnVisible: true,
+        isMessage1Hidden: true,
+        isMessage2Visible: true,
+        isYesButtonVisible: true,
+        isNoButtonVisible: true,
+        isImageVisible: false
+      }))
+    }
+  const closeEnvelope = () => {
+    setEnvelopeState((prevState) => ({ 
+      ...prevState, 
+      isInnerOpen: false,
+      isOuterOpen: false,
+      isHeartBtnHidden: false,
+      isCloseBtnVisible: false,
+      isMessage1Hidden: false,
+      isMessage2Visible: false,
+      isYesButtonVisible: false,
+      isNoButtonVisible: false,
+      isImageVisible: false
+  }));
+}
   const toggleYes = () => {
-
-  }
-  const toggleNo = () => {
-    
-  }
+    setEnvelopeState((prevState) => ({
+      ...prevState,
+      isYesButtonVisible: false,
+      isNoButtonVisible: false,
+      isImageVisible: true,
+      selectedImage: pikachu
+    }));
   };
-
+  const toggleNo = () => {
+    setEnvelopeState((prevState) => ({
+      ...prevState,
+      isYesButtonVisible: false,
+      isNoButtonVisible: false,
+      isImageVisible: true, 
+      selectedImage: over
+    }));
+  };
   return (
     <div className="App">
       <article>
@@ -42,11 +70,12 @@ function App() {
           </p>
           <p className={`message message-2 ${envelopeState.isMessage2Visible ? 'show' : ''}`}>Will You be my Valentine?</p>
           <div className='options'>
-            <button className={`yesBtn ${envelopeState.isYesButtonVisible ? 'show' : ''}`}>Yes</button>
-            <button className={`noBtn ${envelopeState.isNoButtonVisible ? 'show' : ''}`}>No</button>  
+            <button className={`yesBtn ${envelopeState.isYesButtonVisible ? 'show' : ''}`} onClick={toggleYes}>Yes</button>
+            <button className={`noBtn ${envelopeState.isNoButtonVisible ? 'show' : ''}`} onClick={toggleNo}>No</button>  
           </div>
-          <button className={`close-btn otherButton ${envelopeState.isCloseBtnVisible ? 'show' : ''}`} onClick={toggleEnvelope}>close envelope</button>
-          <button className={`heart-btn otherButton ${envelopeState.isHeartBtnHidden ? 'hide' : ''}`} onClick={toggleEnvelope}>&#10084;</button>
+          <img className={`imageChosen ${envelopeState.isImageVisible ? 'show' : ''}`} src={envelopeState.selectedImage} alt=''/>
+          <button className={`heart-btn otherButton ${envelopeState.isHeartBtnHidden ? 'hide' : 'show'}`} onClick={openEnvelope}>&#10084;</button>
+          <button className={`close-btn otherButton ${envelopeState.isCloseBtnVisible ? 'show' : ''}`} onClick={closeEnvelope}>close envelope</button>
           <div className="envelope-flap">
             <svg className="inner">
               <polygon className={`inner-polygon ${envelopeState.isInnerOpen ? 'inner-open' : ''}`} points="5,0 345,0 175,145"></polygon>
